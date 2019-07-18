@@ -5,15 +5,7 @@ const { Header, Content, Footer, Sider } = Layout;
 import { Button } from 'choerodon-ui';
 
 import React, { Component } from 'react';
-class HeaderRight extends Component{
-  render(){
-    return(
-      <div>
-      <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-    </div>
-    );
-  }
-}
+
 class Top extends Component{
   render(){
     return(
@@ -52,10 +44,10 @@ const menu = (
     <Menu.Item key="3">3rd menu item</Menu.Item>
   </Menu>
 );
+//头部
 export class BigHome extends Component{
   render(){
     return(
-      <Layout>
       <Header className="header c7n-boot-header-wrap"style={{paddingLeft:"0px"}}>
         <div className="c7n-boot-header-left" >
         <div className="logo c7n-boot-header-logo-wrap" >
@@ -94,11 +86,11 @@ export class BigHome extends Component{
         </div>
         
       </Header>       
-    </Layout>
 
     );
   }
 }
+//左侧导航
  export  class Menuleft extends Component {
   state = {
     collapsed: false,
@@ -113,45 +105,92 @@ export class BigHome extends Component{
   render() {
     return (
       <Sider
+          width={247}
           trigger={null}
           collapsible
           collapsed={this.state.collapsed}
-        >
-      <Layout style={{ overflow: 'auto',height: '100vh', position: 'fixed', left: 0 }}>
-     
+          className="c7n-menu"
+          style={{ overflow: 'auto', height: '100vh', left: 0 }}
+          
+      > 
+      
       <Button type="primary" onClick={this.toggleCollapsed} style={{ marginBottom: 16 }}>
         <Icon type="menu"  />
       </Button>
       <Menu
-        defaultSelectedKeys={['1']}
-        defaultOpenKeys={['sub1']}
-        mode="inline"
-        inlineCollapsed={this.state.collapsed}       
+      mode="inline"
+      defaultSelectedKeys={['1']}
+      defaultOpenKeys={['sub1']}
+      style={{ height: '100%', borderRight: 0 }}
+              
       >
-        <MenuItemGroup key="g1" title="平台设置">
+      <MenuItemGroup key="g1" title="Item 1">
+
             <Menu.Item key="1">
               <Icon type="domain" />
-              组织类型
+              <span> 组织类型</span>
+             
               </Menu.Item>
             <Menu.Item key="2">
               <Icon type="assignment_ind" />
-              角色管理
-              </Menu.Item>
-      </MenuItemGroup>
-      <MenuItemGroup key="g1" title="平台设置">
-            <Menu.Item key="3">
+              <span> 角色管理</span>
+              
+          </Menu.Item>
+          <Menu.Item key="3">
               <Icon type="domain" />
-              组织类型
+              <span> 组织类型</span>
+             
               </Menu.Item>
             <Menu.Item key="4">
               <Icon type="assignment_ind" />
-              角色管理
+              <span> 角色管理</span>
+              
+          </Menu.Item>
+          <Menu.Item key="5">
+              <Icon type="domain" />
+              <span> 组织类型</span>
+             
               </Menu.Item>
+            <Menu.Item key="6">
+              <Icon type="assignment_ind" />
+              <span> 角色管理</span>
+              
+          </Menu.Item>
+          <Menu.Item key="7">
+              <Icon type="domain" />
+              <span> 组织类型</span>
+             
+              </Menu.Item>
+            <Menu.Item key="8">
+              <Icon type="assignment_ind" />
+              <span> 角色管理</span>
+              
+          </Menu.Item>
+          <Menu.Item key="9">
+              <Icon type="domain" />
+              <span> 组织类型</span>
+             
+              </Menu.Item>
+            <Menu.Item key="10">
+              <Icon type="assignment_ind" />
+              <span> 角色管理</span>
+              
+          </Menu.Item>
+          <Menu.Item key="11">
+              <Icon type="domain" />
+              <span> 组织类型</span>
+             
+              </Menu.Item>
+            <Menu.Item key="12">
+              <Icon type="assignment_ind" />
+              <span> 角色管理</span>
+              
+          </Menu.Item>
+          
       </MenuItemGroup>
      
       </Menu>
      
-    </Layout>
     </Sider>
     );
   }
