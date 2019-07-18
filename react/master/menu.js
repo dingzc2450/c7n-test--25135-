@@ -3,8 +3,11 @@ const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 const { Header, Content, Footer, Sider } = Layout;
 import { Button } from 'choerodon-ui';
-
+import { Route, Switch,Link,NavLink  } from 'react-router-dom';
+import {showConfirm} from './modal';
 import React, { Component } from 'react';
+import Store from './store';
+import { observer } from 'mobx-react';
 
 class Top extends Component{
   render(){
@@ -18,7 +21,6 @@ class Top extends Component{
             </a>
       </div>
       <Menu
-        theme="dark"
         mode="horizontal"
         defaultSelectedKeys={['2']}
         style={{ lineHeight: '64px' }}
@@ -27,6 +29,7 @@ class Top extends Component{
         <Menu.Item key="2">nav 2</Menu.Item>
         <Menu.Item key="3">nav 3</Menu.Item>
       </Menu>
+      
     </Header>
     
     );
@@ -45,7 +48,18 @@ const menu = (
   </Menu>
 );
 //头部
+@observer
 export class BigHome extends Component{
+  constructor(props){
+    super(props);
+    
+
+  }
+  temp="选择项目";
+
+  handleItem(){
+    showConfirm();
+  }
   render(){
     return(
       <Header className="header c7n-boot-header-wrap"style={{paddingLeft:"0px"}}>
@@ -54,12 +68,15 @@ export class BigHome extends Component{
           <div className="c7n-boot-header-logo-icon c7n-boot-header-logo-default-icon"
           >
           </div>
-          <a className="c7n-boot-header-logo">
-            Choerodon</a>
+          <NavLink to="/">
+          <div className="c7n-boot-header-logo">
+            Choerodon</div>
+          </NavLink>
+         
         </div>
         </div>
         <div className="c7n-boot-header-center">
-        <Button funcType="flat" style={{color:"white"}}>选择项目
+        <Button funcType="flat" style={{color:"white"}} onClick={this.handleItem.bind(this)}>{Store.orgName}
         <Icon type="arrow_drop_down" />
         </Button>
         <Button funcType="flat" style={{color:"white"}}>管理
@@ -81,7 +98,7 @@ export class BigHome extends Component{
     <Icon type="notifications"style={{color:"white"}} /></Button>
         </Dropdown>
     <Dropdown placement='bottomCenter' overlay={menu} trigger={['click']}>
-    <Avatar src="./public/user.jpg" />
+    <Avatar src="../public/user.jpg" />
     </Dropdown>
         </div>
         
@@ -127,63 +144,85 @@ export class BigHome extends Component{
       <MenuItemGroup key="g1" title="Item 1">
 
             <Menu.Item key="1">
+            <NavLink to="/index/role">
               <Icon type="domain" />
               <span> 组织类型</span>
-             
+              </NavLink>
               </Menu.Item>
             <Menu.Item key="2">
+              <NavLink to="/index/role">
               <Icon type="assignment_ind" />
               <span> 角色管理</span>
-              
+              </NavLink>
           </Menu.Item>
           <Menu.Item key="3">
+              <NavLink to="/index/role">
               <Icon type="domain" />
               <span> 组织类型</span>
+              </NavLink>
              
               </Menu.Item>
             <Menu.Item key="4">
+              <NavLink to="/index/role">
               <Icon type="assignment_ind" />
               <span> 角色管理</span>
+              </NavLink>
               
           </Menu.Item>
           <Menu.Item key="5">
+              <NavLink to="/index/role">
               <Icon type="domain" />
               <span> 组织类型</span>
+              </NavLink>
              
               </Menu.Item>
             <Menu.Item key="6">
+              <NavLink to="/index/role">
               <Icon type="assignment_ind" />
               <span> 角色管理</span>
+              </NavLink>
               
           </Menu.Item>
           <Menu.Item key="7">
+              <NavLink to="/index/role">
               <Icon type="domain" />
               <span> 组织类型</span>
+              </NavLink>
              
               </Menu.Item>
             <Menu.Item key="8">
+              <NavLink to="/index/role">
               <Icon type="assignment_ind" />
               <span> 角色管理</span>
+              </NavLink>
               
           </Menu.Item>
           <Menu.Item key="9">
+              <NavLink to="/index/role">
               <Icon type="domain" />
               <span> 组织类型</span>
+              </NavLink>
              
               </Menu.Item>
             <Menu.Item key="10">
+              <NavLink to="/index/role">
               <Icon type="assignment_ind" />
               <span> 角色管理</span>
+              </NavLink>
               
           </Menu.Item>
           <Menu.Item key="11">
+              <NavLink to="/index/role">
               <Icon type="domain" />
               <span> 组织类型</span>
+              </NavLink>
              
               </Menu.Item>
             <Menu.Item key="12">
+              <NavLink to="/index/role">
               <Icon type="assignment_ind" />
               <span> 角色管理</span>
+              </NavLink>
               
           </Menu.Item>
           

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
  import {Menuleft,BigHome} from'./menu';
- import {Layout }from 'choerodon-ui'
+ import {Layout }from 'choerodon-ui';
+
 export default class Master extends Component {
 
   render() {
@@ -14,7 +15,7 @@ export default class Master extends Component {
     <Layout className="content">
       <Menuleft></Menuleft>
     <Layout>
-      <Content style={{backgroundColor:"#fff"}}>
+      <Content style={{backgroundColor:"#fff",position: "relative"}}>
       <AutoRouter /> 
       </Content>
         
