@@ -5,6 +5,7 @@ import { asyncRouter, nomatch } from '@choerodon/boot';
 
 const Role = asyncRouter(() => import('./role'));
 const Home=asyncRouter(() => import('./home'));
+const User=asyncRouter(() => import('./user'));
 @inject('AppState')
 class RouteIndex extends React.Component {
   render() {
@@ -14,6 +15,8 @@ class RouteIndex extends React.Component {
          <Route path={`${match.url}/home`} component={Home} />
 
         <Route path={`${match.url}/role`}component={Role} />
+        <Route path={`${match.url}/user`}component={User} />
+
       </Switch>
     );
   }

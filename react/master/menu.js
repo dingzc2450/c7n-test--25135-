@@ -27,7 +27,7 @@ class Top extends Component{
       >
         <Menu.Item key="1">nav 1</Menu.Item>
         <Menu.Item key="2">nav 2</Menu.Item>
-        <Menu.Item key="3">nav 3</Menu.Item>
+   
       </Menu>
       
     </Header>
@@ -36,15 +36,48 @@ class Top extends Component{
   }
 }
 const menu = (
-  <Menu>
-    <Menu.Item key="0">
-      <a href="https://choerodon.io/">1st menu item</a>
+ 
+  <Menu >
+    <Menu.Item Key="0">
+      <div>
+      <NavLink to="/index/user">
+      <Avatar size="large"  src="../public/user.jpg" />
+      </NavLink>
+      <div>
+      <span>管理员</span>
+      <span>1111@1111.com</span>
+      </div>
+      </div>
     </Menu.Item>
     <Menu.Item key="1">
-      <a href="https://choerodon.io/">2nd menu item</a>
+      <NavLink to=" $889$">
+      <Icon type="message_notification"></Icon>
+        消息通知</NavLink>
+    </Menu.Item>
+    <Menu.Item key="2">
+      <NavLink to=" $889$">
+      <Icon type="person"></Icon>
+        个人信息</NavLink>
+    </Menu.Item>
+    <Menu.Item key="3">
+      <NavLink to=" $889$">
+      <Icon type="vpn_key"></Icon>
+        修改密码</NavLink>
+    </Menu.Item>
+    <Menu.Item key="4">
+      <NavLink to=" $889$">
+      <Icon type="authority"></Icon>
+        权限信息</NavLink>
+    </Menu.Item>
+    <Menu.Item key="5">
+      <NavLink to=" $889$">
+      <Icon type="token"></Icon>
+        授权管理</NavLink>
     </Menu.Item>
     <Menu.Divider />
-    <Menu.Item key="3">3rd menu item</Menu.Item>
+    <Menu.Item key="7">
+      <Icon type="exit_to_app"></Icon>
+      退出登录</Menu.Item>
   </Menu>
 );
 //头部
@@ -55,7 +88,6 @@ export class BigHome extends Component{
     
 
   }
-  temp="选择项目";
 
   handleItem(){
     showConfirm();
@@ -83,7 +115,7 @@ export class BigHome extends Component{
         <Icon type="settings" />
         </Button>
         </div>
-        <div className="c7n-boot-header-right">
+    <div className="c7n-boot-header-right">
     <Dropdown placement='bottomCenter' overlay={menu} trigger={['click']}>
     <Button functype="flat" >
     <Icon type="apps"style={{color:"white"}} />
@@ -96,7 +128,7 @@ export class BigHome extends Component{
     <Dropdown placement='bottomCenter' overlay={menu} trigger={['click']}>
     <Button functype="flat" >
     <Icon type="notifications"style={{color:"white"}} /></Button>
-        </Dropdown>
+    </Dropdown>
     <Dropdown placement='bottomCenter' overlay={menu} trigger={['click']}>
     <Avatar src="../public/user.jpg" />
     </Dropdown>

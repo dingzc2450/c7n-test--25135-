@@ -31,7 +31,7 @@ class Store {
     const sorter = [];
     this.isLoading = true;
     axios.post(
-      `/iam/v1/roles/search?page=${page}&size=${size}&sort=${sorter.join(',')}`,
+      `/iam/v1/roles/search?page=${page}&size=${size}&sort=${sorter.join(',')}id,desc`,
       JSON.stringify(body),
     )
       .then((res) => {
