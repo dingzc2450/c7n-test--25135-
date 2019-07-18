@@ -4,7 +4,7 @@ export default class Home extends Component {
   render() {
     return (
       <div>
-        开始第一天编写
+        开始第一天编写2
       </div>
     );
   }

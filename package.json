@@ -1,17 +1,27 @@
 {
   "name": "c7n-test-25135",
   "version": "1.0.0",
-  "description": "",
+  "description": "cn test",
+  "routeName": "index",
   "main": "./react/RouteIndex.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "choerodon-front-boot start --config ./react/config.js"
-  },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@choerodon/boot": "^0.19.1",
     "@choerodon/master": "^0.19.1",
     "choerodon-ui": "^0.8.0"
-  }
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "choerodon-front-boot start --config ./react/config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dingzc2450/c7n-test-25135.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dingzc2450/c7n-test-25135/issues"
+  },
+  "homepage": "https://github.com/dingzc2450/c7n-test-25135#readme"
 }

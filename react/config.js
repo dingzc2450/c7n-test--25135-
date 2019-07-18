@@ -6,9 +6,8 @@ const config = {
   
   // master: '@choerodon/master',
   dashboard: {},
-
   master: './react/master',
-  homePath: './react/home',
+  homePath: './react/role',
 };
 
 module.exports = config;
