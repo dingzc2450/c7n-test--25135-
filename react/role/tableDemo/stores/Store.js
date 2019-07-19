@@ -11,11 +11,18 @@ class Store {
     pageSize: 10,
     total: '',
   };
+  //层级
   @observable level='site';
+  @observable enabled='';
 
   @action
   setLevel(value){
     this.level=value;
+    this.loadData();
+  }
+  @action
+  setEnabled(value){
+    this.enabled=value;
     this.loadData();
   }
   
@@ -63,7 +70,17 @@ class Store {
    
     this.isLoading = true;
     // console.log(page);
-     Object.assign(body,{level:this.level});
+     Object.assign(body,{
+       level:this.level,
+      //  code: '',
+      //  level: '',
+      //  params: [],
+      //  name: '',
+      //  buildIn: 'true',
+      //  enabled: this.enabled,
+    });
+    if(this.enabled!="")
+    Object.assign(body,{enabled:this.enabled});
     // console.log(body);
     axios.post(
       `/iam/v1/roles/search?page=${page}&size=${size}&sort=${sorter.join(',')}`,

@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import { Button, Table,Menu,Dropdown ,Icon } from 'choerodon-ui';
-import { Action, Content, Header, Page } from '@choerodon/boot';
+import { Action, Content, Header, Page, } from '@choerodon/boot';
 import Store from './stores/Store';
+import { Route, Switch,Link,NavLink  } from 'react-router-dom';
+
 
 @observer
 class TableDemo extends Component {
@@ -11,8 +13,9 @@ class TableDemo extends Component {
     this.loadData();
   }
   //下拉菜单列表 
+
   renderMenu= ()=>{
-    let menu=(<Menu onClick={this.handleMenu}>
+    const menu=(<Menu onClick={this.handleMenu}>
       <Menu.Item key="site">
         <span>全局</span>
       </Menu.Item>
@@ -35,6 +38,7 @@ class TableDemo extends Component {
     console.log(item);
     Store.setLevel(item.key);
   }
+  //启用 停用 状态
   renderEnabled(value){
     if(value){
       return(
@@ -73,6 +77,9 @@ class TableDemo extends Component {
         dataIndex: 'name',
         key: 'name',
         width: '25%',
+        filters:[],
+        onFilter: (value, record) => record.enabled.indexOf(value) === 0,
+
       },
       {
         title: '编码',
@@ -96,6 +103,7 @@ class TableDemo extends Component {
             value: 'project',
           }],
         render: text => this.renderLevel(text),
+        onFilter: (value, record) => record.level.indexOf(value) === 0,
       },
       {
         title: '来源',
@@ -108,14 +116,23 @@ class TableDemo extends Component {
         key: 'enabled',
         filters: [
           {
-            isOpen: '启用',
-            value: true,
+            text: '启用',
+            value: "true",
           }, {
-            isOpen: '停用',
-            value: false,
+            text: '停用',
+            value: "false",
           }
         ],
-        render:isOpen=> this.renderEnabled(isOpen),
+        render:text=> this.renderEnabled(text),
+        onFilter: (value, record) => {
+
+          if(record.enabled.toString()===value)
+          {
+            return true;
+          }
+          return false;
+        },
+
       },
 
 
@@ -184,9 +201,8 @@ class TableDemo extends Component {
   handleRefresh(){
     Store.loadData();
   }
-  handleCreate(){
-    console.log(Store.getSelectedRowKeys);
-  }
+ 
+  //最终渲染
   render() {
     return (
       <Page className="choerodon-role">
@@ -198,7 +214,7 @@ class TableDemo extends Component {
           </a>
           </div>
         </Dropdown>
-        <Button  icon="playlist_add" onClick={this.handleCreate}>创建角色</Button>
+        <NavLink to='/index/role/create'><Icon  type="playlist_add"></Icon>创建角色</NavLink>
         <Button  icon="content_copy" disabled={Store.isSelectedRowKeys}>基于所选角色创建</Button>
           <Button
             onClick={()=>{this.handleRefresh()}}

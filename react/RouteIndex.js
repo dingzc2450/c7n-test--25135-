@@ -4,6 +4,7 @@ import { inject } from 'mobx-react';
 import { asyncRouter, nomatch } from '@choerodon/boot';
 
 const Role = asyncRouter(() => import('./role'));
+const CreateRole=asyncRouter(() => import('./role/createRole'));
 const Home=asyncRouter(() => import('./home'));
 const User=asyncRouter(() => import('./user'));
 @inject('AppState')
@@ -14,10 +15,10 @@ class RouteIndex extends React.Component {
       <Switch>
          <Route path={`${match.url}/home`} component={Home} />
 
-        <Route path={`${match.url}/role`}component={Role} />
+        <Route exact path={`${match.url}/role`}component={Role} />
         <Route path={`${match.url}/user`}component={User} />
-
-      </Switch>
+        <Route exact path={`${match.url}/role/create`}component={CreateRole} />
+       </Switch>
     );
   }
 }
