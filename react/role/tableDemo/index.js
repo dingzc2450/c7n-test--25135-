@@ -3,29 +3,37 @@ import { observer } from 'mobx-react';
 import { Button, Table,Menu,Dropdown ,Icon } from 'choerodon-ui';
 import { Action, Content, Header, Page } from '@choerodon/boot';
 import Store from './stores/Store';
-const menu = (
-  <Menu>
-    <Menu.Item key="0">
-      <a href="https://choerodon.io/">全局</a>
-    </Menu.Item>
-    <Menu.Item key="1">
-      <a href="https://choerodon.io/">组织</a>
-    </Menu.Item>
-    <Menu.Item key="3">
-      <a href="https://choerodon.io/">项目</a>
-    </Menu.Item>
-  </Menu>
-);
+
 @observer
 class TableDemo extends Component {
   componentDidMount() {
     this.loadData();
   }
-
+  //下拉菜单列表 
+  renderMenu= ()=>{
+    let menu=(<Menu onClick={this.handleMenu}>
+      <Menu.Item key="site">
+        <span>全局</span>
+      </Menu.Item>
+      <Menu.Item key="organization">
+         <span>组织</span>
+      </Menu.Item>
+      <Menu.Item key="project">
+        <span>项目</span>
+      </Menu.Item>
+    </Menu>);
+    return menu;
+  }
+    
   loadData = () => {
     Store.loadData();
   }
-
+  //由Mobx进行状态管理
+  handleMenu(item, key){
+    console.log('item+key+keypath');
+    console.log(item);
+    Store.setLevel(item.key);
+  }
   renderLevel(text) {
     const LEVEL_MAP = {
       organization: '组织',
@@ -33,7 +41,12 @@ class TableDemo extends Component {
     };
     return LEVEL_MAP[text] || '全局';
   }
+  showLevel=()=>{
+    return this.renderLevel(Store.level);
+  }
+  renderBuiltIn(text){
 
+  }
   renderTable = () => {
     const { isLoading, pagination } = Store;
     const columns = [
@@ -68,6 +81,11 @@ class TableDemo extends Component {
       },
       {
         title: '来源',
+        dataIndex: 'builtIn',
+        key: 'builtIn',
+      },
+      {
+        title: '状态',
         dataIndex: 'enabled',
         key: 'enabled',
       },
@@ -114,15 +132,22 @@ class TableDemo extends Component {
       />
     );
   }
-
+  handlePageChange(page){
+    console.log('index.js page');
+    console.log(page);
+    Store.setPagination(page);
+    Store.loadData();
+  }
   render() {
     return (
       <Page className="choerodon-role">
         <Header title="角色管理">
-        <Dropdown overlay={menu} trigger={['click']}>
+        <Dropdown overlay={this.renderMenu()} trigger={['click']}>
+          <div>
          <a className="c7n-dropdown-link" href="#">
-            全局<Icon type="arrow_drop_down" />
+            {this.showLevel()}<Icon type="arrow_drop_down" />
           </a>
+          </div>
         </Dropdown>
         <Button  icon="playlist_add">创建角色</Button>
         <Button  icon="content_copy" disabled >基于所选角色创建</Button>
