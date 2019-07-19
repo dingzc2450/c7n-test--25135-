@@ -6,6 +6,7 @@ import Store from './stores/Store';
 
 @observer
 class TableDemo extends Component {
+
   componentDidMount() {
     this.loadData();
   }
@@ -34,6 +35,18 @@ class TableDemo extends Component {
     console.log(item);
     Store.setLevel(item.key);
   }
+  renderEnabled(value){
+    if(value){
+      return(
+        <div><Icon type="check_circle"style={{color: "#28c1ca"}}></Icon>启用</div>
+      );
+    }
+    else{
+      return(
+        <div><Icon type="remove_circle" style={{color: "gray"}}></Icon>停用</div>
+      );
+   }
+  }
   renderLevel(text) {
     const LEVEL_MAP = {
       organization: '组织',
@@ -48,7 +61,12 @@ class TableDemo extends Component {
 
   }
   renderTable = () => {
-    const { isLoading, pagination } = Store;
+    const { isLoading, pagination,selectedRowKeys } = Store;
+    const rowSelection = {
+      selectedRowKeys,
+      onChange: this.onSelectChange,
+      
+    };
     const columns = [
       {
         title: '名称',
@@ -88,7 +106,18 @@ class TableDemo extends Component {
         title: '状态',
         dataIndex: 'enabled',
         key: 'enabled',
+        filters: [
+          {
+            isOpen: '启用',
+            value: true,
+          }, {
+            isOpen: '停用',
+            value: false,
+          }
+        ],
+        render:isOpen=> this.renderEnabled(isOpen),
       },
+
 
       {
         title: '',
@@ -100,19 +129,28 @@ class TableDemo extends Component {
             type: 'site',
             text: '基于该角色创建',
             // action: this.showModal.bind(this, record.id),
-          }];
+          },
+          {
+            icon: '',
+            type: 'site',
+            text: '修改',
+            // action: this.handleEnable.bind(this, record),
+          }
+        ];
           if (record.enabled) {
-            actionDatas.push({
-              icon: '',
-              type: 'site',
-              text: '修改',
-              // action: this.handleEnable.bind(this, record),
-            });
+            actionDatas.push(
+              {
+                icon: '',
+                type: 'site',
+                text: '停用',
+                // action: this.handleEnable.bind(this, record),
+              }
+            );
           } else {
             actionDatas.push({
               icon: '',
               type: 'site',
-              text: '停用',
+              text: '启用',
               // action: this.handleEnable.bind(this, record),
             });
           }
@@ -123,6 +161,7 @@ class TableDemo extends Component {
     return (
       <Table
         columns={columns}
+        rowSelection={rowSelection}
         dataSource={Store.data.slice()}
         pagination={pagination}
         rowKey={record => record.id}
@@ -132,11 +171,21 @@ class TableDemo extends Component {
       />
     );
   }
+  onSelectChange=(selectedRowKeys, selectedRows)=>{
+    Store.setSelectedRowKeys(selectedRowKeys);
+  }
+ 
   handlePageChange(page){
     console.log('index.js page');
     console.log(page);
     Store.setPagination(page);
     Store.loadData();
+  }
+  handleRefresh(){
+    Store.loadData();
+  }
+  handleCreate(){
+    console.log(Store.getSelectedRowKeys);
   }
   render() {
     return (
@@ -149,10 +198,10 @@ class TableDemo extends Component {
           </a>
           </div>
         </Dropdown>
-        <Button  icon="playlist_add">创建角色</Button>
-        <Button  icon="content_copy" disabled >基于所选角色创建</Button>
+        <Button  icon="playlist_add" onClick={this.handleCreate}>创建角色</Button>
+        <Button  icon="content_copy" disabled={Store.isSelectedRowKeys}>基于所选角色创建</Button>
           <Button
-            onClick={this.handleRefresh}
+            onClick={()=>{this.handleRefresh()}}
             icon="refresh"
           >
         

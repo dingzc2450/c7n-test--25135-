@@ -3,6 +3,8 @@ import { axios } from '@choerodon/boot';
 
 class Store {
   @observable data = [];
+  @observable selectedRowKeys=[];
+  @observable isSelectedRowKeys=true;
   @observable isLoading = true;
   @observable pagination = {
     current: 1,
@@ -16,10 +18,19 @@ class Store {
     this.level=value;
     this.loadData();
   }
-
+  
   @action
   setData(data) {
     this.data = data;
+  }
+  @action
+  setSelectedRowKeys(value){
+    this.selectedRowKeys=value;
+    this.setIsSelectedRowKeys(value);
+  }
+  @action
+  setIsSelectedRowKeys(value) {
+    this.isSelectedRowKeys= value.length>0?false:true;
   }
 
   @action
@@ -30,7 +41,7 @@ class Store {
   setPagination(value) {
     this.pagination = value;
   }
-
+  
   @computed
   get getData() {
     return this.data.slice();
@@ -39,12 +50,17 @@ class Store {
   get getLevel() {
     return this.level.toString();
   }
+  @computed
+  get getSelectedRowKeys() {
+    return this.selectedRowKeys.slice();
+  }
   
 
   @action
   loadData(page = this.pagination.current, size = this.pagination.pageSize) {
     const body = {};
     const sorter = [];
+   
     this.isLoading = true;
     // console.log(page);
      Object.assign(body,{level:this.level});
