@@ -31,7 +31,7 @@ class CreateRole extends Component {
             }],
           })(
             <Input 
-            prefix='/amdin/role'
+            prefix={Store.createRoleData.code.prefix}
             label="角色编码" 
             name="code"
             placeholder="请输入角色编码"
@@ -61,9 +61,18 @@ class CreateRole extends Component {
             
         </FormItem>
         <FormItem >
-          <Select label="" name="角色标签" required>
-              <Option value="M">role</Option>
-          </Select>
+        <Select
+          mode="multiple"
+          size="default"
+          placeholder="角色标签"
+          
+          onChange={()=>null}
+          style={{ width: '100%' }}
+        >
+          <Option key="1">标签</Option>
+          <Option key="2">标签3</Option>
+
+        </Select>
       </FormItem>
       <FormItem>
       {this.renderTab()}

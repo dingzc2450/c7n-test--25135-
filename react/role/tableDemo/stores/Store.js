@@ -16,15 +16,36 @@ class Store {
   
   @observable enabled='';
 
-  @observable CreateRoleData={
+  @observable createRoleData={
     code:{
       prefix:'',
+      suffix:'',
       content:''
     },
     name:'',
     lable:{},
 
   };
+  @action
+  setcreateRoleData(code=this.getDefaultCode(),name='',lable={}){
+    this.createRoleData.code=code;
+    if(name!='')
+    name.strim();//去空格
+    this.createRoleData.name=name;
+
+  }
+  
+  getDefaultCode(){
+    let str='role/';
+    str+=this.level;
+    str+='/custom/'
+    let code={
+      prefix:str,
+      suffix:'',
+      content:str,
+    }
+    return code;
+  }
   @action
   setLevel(value){
     this.level=value;
@@ -118,24 +139,24 @@ class Store {
 
   //加载创建页面下tab页
   loadTab(){
-    const body={};
-    axios.post(
+  
+    
+    console.log("loadTab.........");
+    axios.get(
       `/iam/v1/menus/menu_config?code=choerodon.code.top.${this.level}`,
-      JSON.stringify(body),
+      
+      {
+        code: 'choerodon.code.top.site'
+  
+  
+      }
     )
       .then((res) => {
 
-        this.data = res.list;
-        //这里开始进行数据筛选 根据下拉表进行筛选
-        let arr=[];
-        for(let item of this.data){
-          if(item.level===this.level){
-            arr.push(item);
-          }
-        }
-        this.data=arr;
+        console.log(res);
       });
   }
+  
 }
 
 const store = new Store();

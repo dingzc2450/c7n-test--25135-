@@ -10,7 +10,8 @@ import { Route, Switch,Link,NavLink  } from 'react-router-dom';
 class TableDemo extends Component {
 
   componentDidMount() {
-    this.loadData();
+    this.loadData();   
+    Store.setcreateRoleData();
   }
   //下拉菜单列表 
 
