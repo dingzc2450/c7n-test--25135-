@@ -25,15 +25,32 @@ class CreateRole extends Component {
   renderOptions() {
     console.log('renderOptions!!');
     const options=[];
-    for(let item of Store.lable){
+    for(let item of Store.lables){
       
-      arr.push(<Option key={item.id}>{item.name}</Option>);
+      options.push(<Option key={item.id}>{item.name}</Option>);
     }
     return options;
   }
   loadLabel() {
     Store.loadLabel();
+
     
+  }
+  handleSaveInStore(){
+    console.log('handleSaveInStore');
+    const { getFieldsValue } = this.props.form;
+    let data=Store.createRoleData;
+    let newData=getFieldsValue();  
+    console.log(newData);
+
+    data.code.suffix=newData.code;
+    data.name=newData.name;
+    data.lables=newData.lables;
+    console.log(data);
+    Store.setcreateRoleData(data);
+    console.log(Store.getCreateRoleData);
+
+
   }
   renderInput() {
     const { getFieldDecorator } = this.props.form;
@@ -59,8 +76,6 @@ class CreateRole extends Component {
 
             />
           )}
-
-
         </FormItem>
         <FormItem style={{ display: "inline-block" }}>
           {getFieldDecorator('name', {
@@ -81,17 +96,22 @@ class CreateRole extends Component {
 
         </FormItem>
         <FormItem >
-          <Select
-            mode="multiple"
+        {getFieldDecorator('lables', {
+            
+          })(
+            <Select
+            mode="tags"
             size="default"
             placeholder="角色标签"
-
+            name="lables"
             onChange={() => null}
             style={{ width: '100%' }}
           >
             {this.renderOptions()}
 
           </Select>
+          )}
+         
         </FormItem>
         <FormItem>
           {this.renderTab()}
@@ -99,7 +119,7 @@ class CreateRole extends Component {
         <div>
           <FormItem>
 
-            <Button type="primary" funcType="raised" htmlType="submit">创建</Button>
+            <Button type="primary" funcType="raised" htmlType="submit" onClick={this.handleSaveInStore.bind(this)}>创建</Button>
             <Button funcType="raised">取消</Button>
           </FormItem>
 

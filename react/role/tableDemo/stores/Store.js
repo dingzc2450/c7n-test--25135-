@@ -30,17 +30,21 @@ class Store {
 
   };
   @action
-  setcreateRoleData(code=this.getDefaultCode(),name='',lable={}){
+  setcreateRoleData(createRoleData='',code=this.getDefaultCode(),name='',labels=[]){
+    
     this.createRoleData.code=code;
     if(name!='')
+    {
     name.strim();//去空格
     this.createRoleData.name=name;
-
+    }
     //确认层级 刷新时 状态消失，层级错误 未解决
     this.createRoleData.level=this.level;
-
+    this.lables=labels;
+    if(createRoleData!='')
+      this.createRoleData=createRoleData;
   }
-  
+ 
   getDefaultCode(){
     let str='role/';
     str+=this.level;
@@ -101,6 +105,10 @@ class Store {
   @computed
   get getLables() {
     return this.lables.slice();
+  }
+  @computed
+  get getCreateRoleData(){
+    return this.createRoleData;
   }
   
 //加载表格数据
