@@ -3,9 +3,11 @@ import { axios } from '@choerodon/boot';
 
 class Store {
   @observable data = [];
+  @observable lables=[];
   @observable selectedRowKeys=[];
   @observable isSelectedRowKeys=true;
   @observable isLoading = true;
+  @observable isOpenMenu=true;
   @observable pagination = {
     current: 1,
     pageSize: 10,
@@ -23,7 +25,8 @@ class Store {
       content:''
     },
     name:'',
-    lable:{},
+    level:'',
+    lables:[],
 
   };
   @action
@@ -32,6 +35,9 @@ class Store {
     if(name!='')
     name.strim();//去空格
     this.createRoleData.name=name;
+
+    //确认层级 刷新时 状态消失，层级错误 未解决
+    this.createRoleData.level=this.level;
 
   }
   
@@ -92,6 +98,10 @@ class Store {
   get getSelectedRowKeys() {
     return this.selectedRowKeys.slice();
   }
+  @computed
+  get getLables() {
+    return this.lables.slice();
+  }
   
 //加载表格数据
   @action
@@ -137,27 +147,43 @@ class Store {
   }
   
 
+  //加载创建页面的下的标签
+  loadLabel(){
+    const body={};
+    axios.get(
+      `/iam/v1/labels?type=role&level=${this.level}`,
+      JSON.stringify(body),
+      
+    )
+      .then((res) => {
+        this.lables=res.map(item=>{
+          return {
+            id:item.id, 
+            name:item.name};
+        });
+        console.log("loadLabel.........");
+        console.log(this.lables);
+      });
+  }
+  
   //加载创建页面下tab页
   loadTab(){
   
-    
+    const body={};
     console.log("loadTab.........");
     axios.get(
       `/iam/v1/menus/menu_config?code=choerodon.code.top.${this.level}`,
+      JSON.stringify(body),
       
-      {
-        code: 'choerodon.code.top.site'
-  
-  
-      }
     )
       .then((res) => {
-
+        this.data=res.subMenus;
         console.log(res);
       });
   }
   
 }
+
 
 const store = new Store();
 
