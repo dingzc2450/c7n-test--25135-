@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
-import { Button, Form ,Input,Select,Row,SelectBox,Menu,Dropdown ,Icon } from 'choerodon-ui';
+import {Tabs, Button, Form ,Input,Select,Row,SelectBox,Menu,Dropdown ,Icon } from 'choerodon-ui';
 import { Action, Content, Header, Page} from '@choerodon/boot';
 import Store from './tableDemo/stores/Store';
 const { Option } = Select;
 const FormItem = Form.Item;
+const TabPane=Tabs.TabPane;
 @observer
 class CreateRole extends Component {
-
+  componentDidMount() {
+    this.loadTab();
+  }
+  loadTab(){
+    Store.loadTab();
+  }
 
     renderInput(){
       const{getFieldDecorator}= this.props.form;
@@ -59,9 +65,34 @@ class CreateRole extends Component {
               <Option value="M">role</Option>
           </Select>
       </FormItem>
-    
+      <FormItem>
+      {this.renderTab()}
+      </FormItem>
+      <div>
+      <FormItem>
+
+      <Button type="primary" funcType="raised" htmlType="submit">创建</Button>
+      <Button funcType="raised">取消</Button>
+      </FormItem>
+      
+      </div>
+      
+
       </Form>
         );
+    }
+    renderTab(){
+      const arr=Store.level;
+      return(
+        <Tabs defaultActiveKey="1" onChange={this.callback}>
+          <TabPane tab={arr} key="1">Content of Tab Pane 1</TabPane>
+          <TabPane tab="Tab 2" key="2">Content of Tab Pane 2</TabPane>
+        </Tabs>
+      );
+     
+    }
+    callback(){
+
     }
     renderLevel(text) {
       

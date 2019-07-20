@@ -13,8 +13,18 @@ class Store {
   };
   //层级
   @observable level='site';
+  
   @observable enabled='';
 
+  @observable CreateRoleData={
+    code:{
+      prefix:'',
+      content:''
+    },
+    name:'',
+    lable:{},
+
+  };
   @action
   setLevel(value){
     this.level=value;
@@ -62,7 +72,7 @@ class Store {
     return this.selectedRowKeys.slice();
   }
   
-
+//加载表格数据
   @action
   loadData(page = this.pagination.current, size = this.pagination.pageSize) {
     const body = {};
@@ -102,6 +112,28 @@ class Store {
           pageSize: res.pageSize,
           total:res.total,
         };
+      });
+  }
+  
+
+  //加载创建页面下tab页
+  loadTab(){
+    const body={};
+    axios.post(
+      `/iam/v1/menus/menu_config?code=choerodon.code.top.${this.level}`,
+      JSON.stringify(body),
+    )
+      .then((res) => {
+
+        this.data = res.list;
+        //这里开始进行数据筛选 根据下拉表进行筛选
+        let arr=[];
+        for(let item of this.data){
+          if(item.level===this.level){
+            arr.push(item);
+          }
+        }
+        this.data=arr;
       });
   }
 }

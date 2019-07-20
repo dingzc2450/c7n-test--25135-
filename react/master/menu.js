@@ -8,7 +8,7 @@ import {showConfirm} from './modal';
 import React, { Component } from 'react';
 import Store from './store';
 import { observer } from 'mobx-react';
-
+import imgUrl from '../public/user.jpg';
 class Top extends Component{
   render(){
     return(
@@ -41,7 +41,7 @@ const menu = (
     <Menu.Item Key="0">
       <div>
       <NavLink to="/index/user">
-      <Avatar size="large"  src="../public/user.jpg" />
+      <Avatar size="large"  src={imgUrl} />
       </NavLink>
       <div>
       <span>管理员</span>
@@ -130,7 +130,7 @@ export class BigHome extends Component{
     <Icon type="notifications"style={{color:"white"}} /></Button>
     </Dropdown>
     <Dropdown placement='bottomCenter' overlay={menu} trigger={['click']}>
-    <Avatar src="../public/user.jpg" />
+    <Avatar src={imgUrl}/>
     </Dropdown>
         </div>
         
