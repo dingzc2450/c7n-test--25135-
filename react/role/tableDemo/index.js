@@ -52,6 +52,19 @@ class TableDemo extends Component {
       );
    }
   }
+  renderBuiltIn(value){
+    if(value){
+      return(
+        <div><Icon type="settings"></Icon>预定义</div>
+      );
+    }
+    else{
+      return(
+        <div><Icon type="av_timer"></Icon>自定义</div>
+      );
+
+  }
+}
   renderLevel(text) {
     const LEVEL_MAP = {
       organization: '组织',
@@ -62,9 +75,7 @@ class TableDemo extends Component {
   showLevel=()=>{
     return this.renderLevel(Store.level);
   }
-  renderBuiltIn(text){
 
-  }
   renderTable = () => {
     const { isLoading, pagination,selectedRowKeys } = Store;
     const rowSelection = {
@@ -110,6 +121,7 @@ class TableDemo extends Component {
         title: '来源',
         dataIndex: 'builtIn',
         key: 'builtIn',
+        render:text=>this.renderBuiltIn(text),
       },
       {
         title: '状态',
