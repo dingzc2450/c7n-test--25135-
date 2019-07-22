@@ -191,8 +191,9 @@ class Store {
     )
       .then((res) => {
         // this.data=res.subMenus;
-        this.menuData=res.subMenus
-        console.log(res);
+        this.menuData= JSON.parse(JSON.stringify(res.subMenus).replace(/subMenus/g,"children")); 
+        
+        console.log(this.menuData);
       });
   }
   

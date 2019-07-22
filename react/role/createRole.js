@@ -137,7 +137,7 @@ class CreateRole extends Component {
       dataIndex: 'name',
     }, {
       title: '页面入口',
-      dataIndex: 'age',
+      dataIndex: 'route',
     }];
     const { selectedRowKeys } = Store.selectedRowKeys;
     const rowSelection = {
@@ -168,7 +168,12 @@ class CreateRole extends Component {
     };
     
       return(
-        <Table rowSelection={rowSelection} columns={columns} dataSource={Store.getMenuData} />
+        <Table 
+        rowSelection={rowSelection}
+        pagination={false}
+        filterBar={false}
+         columns={columns} 
+         dataSource={Store.getMenuData} />
       );
   }
   renderTabPane() {
