@@ -130,16 +130,31 @@ class CreateRole extends Component {
       </Form>
     );
   }
-
+  onSelectChange=(selectedRowKeys, selectedRows)=>{
+    Store.setSelectedRowKeys(selectedRowKeys);
+  }
   renderMenu(){
-    const columns = [{
+    const columns = [
+   
+      {      
       title: '菜单',
       dataIndex: 'name',
+      render:(text, record, index)=>{
+        console.log(record);
+        return(
+          <div style={{display:"inline"}}>
+          <Icon type={record.icon}></Icon>
+          <span>{text}</span>
+          </div>
+        );
+      }
+      
     }, {
       title: '页面入口',
       dataIndex: 'route',
     }];
-    const { selectedRowKeys } = Store.selectedRowKeys;
+    const { selectedRowKeys } = Store;
+   
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange,
@@ -150,26 +165,15 @@ class CreateRole extends Component {
         onSelect: () => {
           Store.setSelectedRowKeys([...Array(46).keys()])
         },
-      }, {
-        key: 'even',
-        text: 'Select Even Row',
-        onSelect: (changableRowKeys) => {
-          let newSelectedRowKeys = [];
-          newSelectedRowKeys = changableRowKeys.filter((key, index) => {
-            if (index % 2 !== 0) {
-              return true;
-            }
-            return false;
-          });
-          Store.setSelectedRowKeys({ selectedRowKeys: newSelectedRowKeys });
-        },
-      }],
+      }, 
+    ],
       onSelection: this.onSelection,
     };
     
       return(
         <Table 
         rowSelection={rowSelection}
+        
         pagination={false}
         filterBar={false}
          columns={columns} 
