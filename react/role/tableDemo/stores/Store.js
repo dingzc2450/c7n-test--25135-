@@ -6,6 +6,7 @@ class Store {
   @observable lables=[];
   @observable menuData=[];
   @observable selectedRowKeys=[];
+  @observable records=[];
   @observable isSelectedRowKeys=true;
   @observable isLoading = true;
   @observable isOpenMenu=true;
@@ -30,20 +31,32 @@ class Store {
     lables:[],
 
   };
+  
   @action
-  setcreateRoleData(createRoleData='',code=this.getDefaultCode(),name='',labels=[]){
+  setcreateRoleData(newData='',code=this.getDefaultCode(),name='',lables=[]){
     
-    this.createRoleData.code=code;
-    if(name!='')
-    {
-    name.strim();//去空格
-    this.createRoleData.name=name;
-    }
+  
     //确认层级 刷新时 状态消失，层级错误 未解决
     this.createRoleData.level=this.level;
-    this.lables=labels;
-    if(createRoleData!='')
-      this.createRoleData=createRoleData;
+    this.lables=lables;
+    if(newData!='')
+    {
+      this.createRoleData.code.suffix=newData.code;
+      this.createRoleData.code.content+=newData.code;
+      this.createRoleData.name=newData.name;
+      this.createRoleData.lables=newData.lables.map(item=>{
+        return {id:item};
+      });
+    
+    }
+    else{
+      this.createRoleData.code=code;
+      if(name!='')
+      {
+      name.strim();//去空格
+      this.createRoleData.name=name;
+      }
+    }
   }
  
   getDefaultCode(){
@@ -193,7 +206,6 @@ class Store {
         // this.data=res.subMenus;
         this.menuData= JSON.parse(JSON.stringify(res.subMenus).replace(/subMenus/g,"children")); 
         
-        console.log(this.menuData);
       });
   }
   

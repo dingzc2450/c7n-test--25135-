@@ -44,11 +44,8 @@ class CreateRole extends Component {
     let newData=getFieldsValue();  
     console.log(newData);
 
-    data.code.suffix=newData.code;
-    data.name=newData.name;
-    data.lables=newData.lables;
-    console.log(data);
-    Store.setcreateRoleData(data);
+    // console.log(data);
+    Store.setcreateRoleData(newData);
     console.log(Store.getCreateRoleData);
 
 
@@ -133,14 +130,17 @@ class CreateRole extends Component {
   onSelectChange=(selectedRowKeys, selectedRows)=>{
     Store.setSelectedRowKeys(selectedRowKeys);
   }
+  handleConfig(){
+    console.log('handleConfig');
+  }
   renderMenu(){
     const columns = [
    
       {      
       title: '菜单',
       dataIndex: 'name',
+      
       render:(text, record, index)=>{
-        console.log(record);
         return(
           <div style={{display:"inline"}}>
           <Icon type={record.icon}></Icon>
@@ -149,16 +149,36 @@ class CreateRole extends Component {
         );
       }
       
-    }, {
+    }, 
+    {
       title: '页面入口',
       dataIndex: 'route',
-    }];
+    },
+    {
+      title: '',
+      key: 'action',
+      align: 'right',
+      render: (text, record) => {
+        const actionDatas = [{
+          icon: 'predefine"',
+          type: 'site',
+          text: '基于该角色创建',
+          // action: this.showModal.bind(this, record.id),
+        },
+       
+      ];
+      return <Button icon="predefine" onClick={this.handleConfig} ></Button>
+    }
+  }
+  
+  ];
     const { selectedRowKeys } = Store;
    
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange,
       hideDefaultSelections: true,
+      fixed:'center',
       selections: [{
         key: 'all-data',
         text: 'Select All Data',
@@ -173,11 +193,14 @@ class CreateRole extends Component {
       return(
         <Table 
         rowSelection={rowSelection}
-        
+        onRow={(record,index)=>{
+          Store.records.push(record);
+        }}
         pagination={false}
         filterBar={false}
          columns={columns} 
-         dataSource={Store.getMenuData} />
+         dataSource={Store.getMenuData} 
+         />
       );
   }
   renderTabPane() {
@@ -196,13 +219,17 @@ class CreateRole extends Component {
         <span
           style={{ marginRight: "80px", fontSize: "16px" }}
         >菜单分配</span>
-        <Button funcType="flat" type="primary" icon={Store.isOpenMenu ? 'expand_less' : 'expand_more'}>全部{Store.isOpenMenu ? '收齐' : '展开'}</Button>
+        <Button onClick={this.handleOpenMenu} funcType="flat" type="primary" icon={Store.isOpenMenu ? 'expand_less' : 'expand_more'}>全部{Store.isOpenMenu ? '收齐' : '展开'}</Button>
         <Tabs defaultActiveKey="1" onChange={this.callback}>
           {this.renderTabPane()}
         </Tabs>
       </div>
     );
 
+  }
+  handleOpenMenu(){
+    console.log('openMenu');
+    console.log(Store.records);
   }
   callback() {
 
