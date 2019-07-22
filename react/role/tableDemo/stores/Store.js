@@ -4,6 +4,7 @@ import { axios } from '@choerodon/boot';
 class Store {
   @observable data = [];
   @observable lables=[];
+  @observable menuData=[];
   @observable selectedRowKeys=[];
   @observable isSelectedRowKeys=true;
   @observable isLoading = true;
@@ -110,6 +111,10 @@ class Store {
   get getCreateRoleData(){
     return this.createRoleData;
   }
+  @computed
+  get getMenuData(){
+    return this.menuData.slice();
+  }
   
 //加载表格数据
   @action
@@ -185,7 +190,8 @@ class Store {
       
     )
       .then((res) => {
-        this.data=res.subMenus;
+        // this.data=res.subMenus;
+        this.menuData=res.subMenus
         console.log(res);
       });
   }

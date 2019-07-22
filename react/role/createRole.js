@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
-import { Tabs, Button, Form, Input, Select, Row, SelectBox, Menu, Dropdown, Icon } from 'choerodon-ui';
+import { Tabs, Button, Form, Input, Select, Table,Row, SelectBox, Menu, Dropdown, Icon } from 'choerodon-ui';
 import { Action, Content, Header, Page } from '@choerodon/boot';
 import Store from './tableDemo/stores/Store';
 const { Option } = Select;
@@ -9,6 +9,7 @@ const TabPane = Tabs.TabPane;
 @observer
 class CreateRole extends Component {
   componentDidMount() {
+    
     this.loadTab();
     this.loadLabel();
   }
@@ -129,9 +130,50 @@ class CreateRole extends Component {
       </Form>
     );
   }
+
+  renderMenu(){
+    const columns = [{
+      title: '菜单',
+      dataIndex: 'name',
+    }, {
+      title: '页面入口',
+      dataIndex: 'age',
+    }];
+    const { selectedRowKeys } = Store.selectedRowKeys;
+    const rowSelection = {
+      selectedRowKeys,
+      onChange: this.onSelectChange,
+      hideDefaultSelections: true,
+      selections: [{
+        key: 'all-data',
+        text: 'Select All Data',
+        onSelect: () => {
+          Store.setSelectedRowKeys([...Array(46).keys()])
+        },
+      }, {
+        key: 'even',
+        text: 'Select Even Row',
+        onSelect: (changableRowKeys) => {
+          let newSelectedRowKeys = [];
+          newSelectedRowKeys = changableRowKeys.filter((key, index) => {
+            if (index % 2 !== 0) {
+              return true;
+            }
+            return false;
+          });
+          Store.setSelectedRowKeys({ selectedRowKeys: newSelectedRowKeys });
+        },
+      }],
+      onSelection: this.onSelection,
+    };
+    
+      return(
+        <Table rowSelection={rowSelection} columns={columns} dataSource={Store.getMenuData} />
+      );
+  }
   renderTabPane() {
     const tabPanes = [];
-    tabPanes.push(<TabPane tab={`${this.renderLevel(Store.level)}层`} key="1">Content of Tab Pane 1</TabPane>);
+    tabPanes.push(<TabPane tab={`${this.renderLevel(Store.level)}层`} key="1">{this.renderMenu()}</TabPane>);
 
     if (Store.level === 'site') {
       tabPanes.push(<TabPane tab="个人中心" key="2">个人中心</TabPane>);
